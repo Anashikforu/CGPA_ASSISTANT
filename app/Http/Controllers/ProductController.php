@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
    
 use App\Models\Product;
+use App\Models\exam;
 use Illuminate\Http\Request;
   
 class ProductController extends Controller
@@ -18,9 +19,11 @@ class ProductController extends Controller
         $selected_semester  = json_decode($semester,true)  ;
         $products = Product::whereIn('semester_id', $selected_semester)->orderBy('credit')->get();
         $cgpa = 0;
-        $credit = Product::sum('credit');
+        $credit = Product::where('inactive',0)->sum('credit');
         foreach ($products as $key => $value) {
-            $cgpa += $value->credit*$value->expected;
+            if($value->inactive == 0){
+                $cgpa += $value->credit*$value->expected;
+            }
         }
         $cgpa /= $credit;
         $cgpa = round($cgpa,3);
@@ -34,9 +37,11 @@ class ProductController extends Controller
         $selected_semester  = json_decode($request->semester,true)  ;
         $products = Product::whereIn('semester_id', $selected_semester)->orderBy('credit')->get();
         $cgpa = 0;
-        $credit = Product::whereIn('semester_id', $selected_semester)->sum('credit');
+        $credit = Product::where('inactive',0)->whereIn('semester_id', $selected_semester)->sum('credit');
         foreach ($products as $key => $value) {
-            $cgpa += $value->credit*$value->expected;
+            if($value->inactive == 0){
+                $cgpa += $value->credit*$value->expected;
+            }
         }
         if($credit > 0){
         $cgpa /= $credit;
@@ -94,7 +99,8 @@ class ProductController extends Controller
     public function edit( $subject)
     {
         $product =  Product::find($subject);
-        return view('posts.edit',compact('product'));
+        $exams =  exam::where('f_subject_id',$subject)->get();
+        return view('posts.edit',compact('product','exams'));
     }
     
     /**

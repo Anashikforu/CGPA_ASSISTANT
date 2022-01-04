@@ -56,6 +56,7 @@
                       <th>Semester</th>
                       <th>Highest Grade</th>
                       <th>Expected Grade</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -68,6 +69,7 @@
                         <th style="background-color: #58CD36; font-size: 120%">Semester {{ $subject->semester_id }}</th>
                         <td>{{ $subject->top }}</td>
                         <td>{{ $subject->expected }}</td>
+                        <td><button type="button" class="{{ $subject->inactive == 0?'btn btn-sm btn-success': 'btn btn-sm btn-danger' }}">{{ $subject->inactive == 0?'Active': 'Inactive' }}</button> </td>
                         <td>
                           <form action="{{ route('subject.destroy',$subject->id) }}" method="POST">
                           
@@ -96,7 +98,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="authorModalLabel">Create New Author</h5>
+          <h5 class="modal-title" id="authorModalLabel">Create New Subject</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -246,7 +248,11 @@
                       var i = 0;
                     products.forEach(element => {
                       i++;
-                      td += `<tr style="background-color: #808080; color: aliceblue !important"><td style="background-color: #58CD36;">`+ i +`</td><th style="background-color: #58CD36; font-size: 120%"> `+ element.subject_name +`</th><td> `+ element.credit +`</td><th style="background-color: #58CD36; font-size: 120%">Semester `+ element.semester_id +`</th><td> `+ element.top +`</td><td> `+ element.expected +`</td>`
+
+                      element_type = element.inactive == 0 ? "btn-success": "btn-danger";
+                      element_status = element.inactive == 0 ? "Active": "Inactive";
+
+                      td += `<tr style="background-color: #808080; color: aliceblue !important"><td style="background-color: #58CD36;">`+ i +`</td><th style="background-color: #58CD36; font-size: 120%"> `+ element.subject_name +`</th><td> `+ element.credit +`</td><th style="background-color: #58CD36; font-size: 120%">Semester `+ element.semester_id +`</th><td> `+ element.top +`</td><td> `+ element.expected +`</td><td><button type="button" class="btn btn-sm `+element_type+`"> `+ element_status +`</button> </td>`
                         td +=`<td><a class="btn btn-primary btn_update" id= up`+element.id+` >Edit</a> <a type="button" class="btn btn-danger btn_remove" id= del`+element.id+`>Delete</a></td><\tr >`;
                     });
                     $('#tbody').empty();

@@ -84,7 +84,6 @@ class PostController extends Controller
             'subject_name' => 'required',
             'credit' => 'required',
         ]);
-    
         $post->update($request->all());
     
         return redirect()->route('posts.index')

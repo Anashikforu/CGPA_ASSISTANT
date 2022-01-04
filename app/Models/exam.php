@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class exam extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'subject_name', 'credit', 'top', 'expected','semester_id','inactive'
+        'exam_name', 'f_subject_id', 'exam_time', 'weight','mark','feedback'
     ];
 }
