@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\exam;
+use App\Models\Routine;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use DateTime;
+use Auth;
 
-class ExamController extends Controller
+class RoutineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +19,13 @@ class ExamController extends Controller
     public function index()
     {
         //
-        
+        $time = date("Y-m-d H:i:s", strtotime('+5 hours +30 minutes'));
+        $timestamp = strtotime($time);
+
+        $day = date('D', $timestamp);
+        $subjects = Product::where('user_id',Auth::user()->id)->distinct()->get(['id'])->pluck('id');
+        $classes = Routine::Where('weekday', 'like', '%' . $day . '%')->whereIn('f_subject_id',$subjects)->with('subject')->orderby('slot')->get();
+        return view('posts.routine',compact('classes','day'));
     }
 
     /**
@@ -36,12 +46,14 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $request->validate([
-            'exam_name' => 'required',
-            'exam_time' => 'required',
+            'f_subject_id' => 'required',
+            'weekday' => 'required',
+            'slot' => 'required',
         ]);
     
-        exam::create($request->all());
+        Routine::create($request->all());
      
         return Response(['status' => true]);
     }
@@ -49,10 +61,10 @@ class ExamController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\exam  $exam
+     * @param  \App\Models\Routine  $routine
      * @return \Illuminate\Http\Response
      */
-    public function show(exam $exam)
+    public function show(Routine $routine)
     {
         //
     }
@@ -60,10 +72,10 @@ class ExamController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\exam  $exam
+     * @param  \App\Models\Routine  $routine
      * @return \Illuminate\Http\Response
      */
-    public function edit(exam $exam)
+    public function edit(Routine $routine)
     {
         //
     }
@@ -72,10 +84,10 @@ class ExamController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\exam  $exam
+     * @param  \App\Models\Routine  $routine
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, exam $exam)
+    public function update(Request $request, Routine $routine)
     {
         //
     }
@@ -83,13 +95,14 @@ class ExamController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\exam  $exam
+     * @param  \App\Models\Routine  $routine
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $subject)
+    public function destroy( $routine)
     {
-        $exam =  exam::find($subject);
-        $exam->delete();
+        //
+        $routine =  Routine::find($routine);
+        $routine->delete();
     
         return redirect()->back();
     }

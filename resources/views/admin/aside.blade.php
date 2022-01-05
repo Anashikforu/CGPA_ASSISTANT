@@ -19,6 +19,12 @@
                     <span class="site-menu-title">Subject</span>
                 </a>
             </li>
+            <li class="site-menu-item has-sub">
+              <a href="{{ url('/routine') }}">
+                  <i class="site-menu-icon wb-order " aria-hidden="true"></i>
+                  <span class="site-menu-title">Class Alert</span>
+              </a>
+          </li>
           </ul>
 
           {{-- <div class="site-menubar-section">
@@ -49,6 +55,12 @@
       <a href="javascript: void(0);" data-placement="top" data-toggle="tooltip" data-original-title="Lock">
         <span class="icon wb-eye-close" aria-hidden="true"></span>
       </a>
+      <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
+        <span class="icon wb-power" aria-hidden="true"></span>
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
     </div>
   </div>
   <div class="site-gridmenu">

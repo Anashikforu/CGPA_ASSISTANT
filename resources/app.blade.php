@@ -63,7 +63,7 @@
         <div class="page-content vertical-align-middle animation-slide-top animation-duration-1">
             <div class="brand">
                 <img class="brand-img" src="{{ asset('/') }}assets/images/logo.png" alt="...">
-                <h2 class="brand-text">CGPA ASSISTANT</h2>
+                <h2 class="brand-text">BOOKLINE BD</h2>
             </div>
             <main class="py-4">
                 @yield('content')
@@ -71,7 +71,7 @@
 
             <footer class="page-copyright page-copyright-inverse">
                 <p>WEBSITE BY TimeLead Solutions</p>
-                <p>© 2022. All RIGHT RESERVED.</p>
+                <p>© 2020. All RIGHT RESERVED.</p>
                 <div class="social">
                     <a class="btn btn-icon btn-pure" href="javascript:void(0)">
                         <i class="icon bd-twitter" aria-hidden="true"></i>
@@ -88,8 +88,7 @@
     </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data.js"></script>
+
     <!-- Core  -->
     <script src="{{ asset('/assets') }}/global/vendor/babel-external-helpers/babel-external-helpers599c.js?v4.0.2"></script>
     <script src="{{ asset('/assets') }}/global/vendor/jquery/jquery.min599c.js?v4.0.2"></script>

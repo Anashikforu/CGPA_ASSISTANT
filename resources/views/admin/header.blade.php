@@ -62,7 +62,12 @@
               </span>
             </a>
             <div class="dropdown-menu" role="menu">
-              
+              <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> {{ Auth::user()->name }}</a>
+              <div class="dropdown-divider" role="presentation"></div>
+              <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
             </div>
           </li>
           <li class="nav-item dropdown">

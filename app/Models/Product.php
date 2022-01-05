@@ -10,6 +10,6 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'subject_name', 'credit', 'top', 'expected','semester_id','inactive'
+        'subject_name', 'credit', 'top', 'expected','semester_id','inactive','user_id'
     ];
 }

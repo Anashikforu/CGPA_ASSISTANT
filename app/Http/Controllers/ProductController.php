@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
    
 use App\Models\Product;
 use App\Models\exam;
+use App\Models\Routine;
 use Illuminate\Http\Request;
-  
+use Auth;
+
 class ProductController extends Controller
 {
     /**
@@ -15,17 +17,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $semester  = Product::distinct()->get(['semester_id'])->pluck('semester_id');
+        $semester  = Product::where('user_id',Auth::user()->id)->distinct()->get(['semester_id'])->pluck('semester_id');
         $selected_semester  = json_decode($semester,true)  ;
-        $products = Product::whereIn('semester_id', $selected_semester)->orderBy('credit')->get();
+        $products = Product::where('user_id',Auth::user()->id)->whereIn('semester_id', $selected_semester)->orderBy('credit')->get();
         $cgpa = 0;
-        $credit = Product::where('inactive',0)->sum('credit');
+        $credit = Product::where('user_id',Auth::user()->id)->where('inactive',0)->sum('credit');
         foreach ($products as $key => $value) {
             if($value->inactive == 0){
                 $cgpa += $value->credit*$value->expected;
             }
         }
-        $cgpa /= $credit;
+        if($credit > 0){
+            $cgpa /= $credit;
+        }
         $cgpa = round($cgpa,3);
         return view('posts.index',compact('products','cgpa','semester','selected_semester'))
             ->with('i', (request()->input('page', 1) - 1) * 20);
@@ -33,11 +37,11 @@ class ProductController extends Controller
 
     public function semester(Request $request)
     {
-        $semester  = Product::distinct()->get(['semester_id'])->pluck('semester_id');
+        $semester  = Product::where('user_id',Auth::user()->id)->distinct()->get(['semester_id'])->pluck('semester_id');
         $selected_semester  = json_decode($request->semester,true)  ;
-        $products = Product::whereIn('semester_id', $selected_semester)->orderBy('credit')->get();
+        $products = Product::where('user_id',Auth::user()->id)->whereIn('semester_id', $selected_semester)->orderBy('credit')->get();
         $cgpa = 0;
-        $credit = Product::where('inactive',0)->whereIn('semester_id', $selected_semester)->sum('credit');
+        $credit = Product::where('user_id',Auth::user()->id)->where('inactive',0)->whereIn('semester_id', $selected_semester)->sum('credit');
         foreach ($products as $key => $value) {
             if($value->inactive == 0){
                 $cgpa += $value->credit*$value->expected;
@@ -100,7 +104,8 @@ class ProductController extends Controller
     {
         $product =  Product::find($subject);
         $exams =  exam::where('f_subject_id',$subject)->get();
-        return view('posts.edit',compact('product','exams'));
+        $routines =  Routine::where('f_subject_id',$subject)->orderBy('weekday')->get();
+        return view('posts.edit',compact('product','exams','routines'));
     }
     
     /**

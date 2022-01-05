@@ -89,11 +89,47 @@
                                 <button type="submit" class="btn btn-primary" id="validateButton2" value="{{$product->id}}">Submit</button>
                             </div>
 
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#examModal">Add Exam</button>
+                            
                         </form>
                         @php
                             $i = 0;
+                            $j = 0;
                         @endphp
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#routineModal">Add Class Time</button>
+                        <div class="example table-responsive">
+                            <table class="table table-responsive-xs table-striped">
+                              <thead>
+                                <tr class="table-active">
+                                  <th>#</th>
+                                  <th>Weekday</th>
+                                  <th>Lecture</th>
+                                  <th>Slot</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody id="tbody">
+                              @foreach ($routines as $key => $routine)
+                                <tr  style="background-color: #808080; color: aliceblue !important">
+                                    <td style="background-color: #58CD36;">{{ ++$j }}</td>
+                                    <td style="background-color: #58CD36;">{{$routine->weekday }}</td>
+                                    <td>{{ $routine->lecture }}</td>
+                                    <td>{{ $routine->slot }}</td>
+                                    <td>
+                                      <form action="{{ route('routine.destroy',$routine->id) }}" method="POST">
+                                      
+                                          {{-- <a class="btn btn-primary" href="{{ route('routine.edit',$routine->id) }}">Edit</a> --}}
+                        
+                                          @csrf
+                                          @method('DELETE')
+                            
+                                          <button type="submit" class="btn btn-danger">Delete</button>
+                                      </form>
+                                    </td>
+                                </tr>
+                               @endforeach
+                            </table>
+                          </div>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#examModal">Add Exam</button>
                         <div class="example table-responsive">
                             <table class="table table-responsive-xs table-striped">
                               <thead>
@@ -117,7 +153,7 @@
                                     <td>
                                       <form action="{{ route('exams.destroy',$exam->id) }}" method="POST">
                                       
-                                          <a class="btn btn-primary" href="{{ route('exams.edit',$exam->id) }}">Edit</a>
+                                          {{-- <a class="btn btn-primary" href="{{ route('exams.edit',$exam->id) }}">Edit</a> --}}
                         
                                           @csrf
                                           @method('DELETE')
@@ -133,7 +169,60 @@
                 </div>
             </div>
         </div>
+        
 
+        <div class="modal fade" id="routineModal" tabindex="-1" role="dialog" aria-labelledby="routineModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="routineModalLabel">Create New Slot</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <form class="form-horizontal" id="author_create"  autocomplete="off">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label">Time</label>
+                            <div class="col-md-9">
+                                <input type="time" class="form-control" name="slot" id="slot" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                              <label class="col-md-3 form-control-label">lecture</label>
+                              <div class="col-md-9">
+                                  <input type="number" class="form-control" name="lecture" id="lecture"/>
+                              </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label">Weekday</label>
+                            <div class="col-md-9">
+                                <select class="form-select" name="weekday" id="weekday" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="Monday" selected>Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday" >Friday</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+        
+                        <div class="text-right"> 
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="routine_create_submit" >Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="examModal" tabindex="-1" role="dialog" aria-labelledby="examModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -235,6 +324,36 @@
             success: function(response){
               console.log(response);
                     $('#author_create_submit').html('Submit');
+                    window.location.reload();
+            }});
+        });
+
+        
+        $('#routine_create_submit').click(function(e){
+        e.preventDefault();
+        
+        /*Ajax Request Header setup*/
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+        $('#routine_create_submit').html('Sending..');
+        /* Submit form data using ajax*/
+        $.ajax({
+            url: "{{ route('routine.store') }}",
+            method: 'post',
+            data: {
+                weekday : $('#weekday').val(),
+                slot : $('#slot').val(),
+                f_subject_id : $('#f_subject_id').val(),
+                lecture : $('#lecture').val(),
+            },
+            success: function(response){
+              console.log(response);
+                    $('#routine_create_submit').html('Submit');
                     window.location.reload();
             }});
         });

@@ -111,6 +111,7 @@
                     <label class="col-md-3 form-control-label">Subject Name</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" name="subject_name" id="subject_name" />
+                        <input type="hidden"  name="user_id" id="user_id" value="{{Auth::user()->id}}"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -176,6 +177,7 @@
             method: 'post',
             data: {
                 subject_name : $('#subject_name').val(),
+                user_id : $('#user_id').val(),
                 credit : $('#credit').val(),
                 top : $('#top').val(),
                 semester_id : $('#semester_id').val(),

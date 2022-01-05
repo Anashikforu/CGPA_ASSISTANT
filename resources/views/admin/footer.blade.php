@@ -1,10 +1,13 @@
 <!-- Footer -->
 <footer class="site-footer">
-    <div class="site-footer-legal">© 2020 <a >BookLineBD</a></div>
+    <div class="site-footer-legal">© 2022 <a >Ashik's</a></div>
     <div class="site-footer-right">
-      <a style="color: red">TimeLead Solutions</a> Creation
+      <a style="color: red">An Ashik </a> Creation
     </div>
   </footer>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data.js"></script>
   <!-- Core  -->
   <script src="{{ asset('assets') }}/global/vendor/babel-external-helpers/babel-external-helpers599c.js?v4.0.2"></script>
   <script src="{{ asset('assets') }}/global/vendor/jquery/jquery.min599c.js?v4.0.2"></script>
