@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Stock Management System - Book Line BD</title>
+    <title>CGPA Assistant</title>
 
     <link rel="apple-touch-icon" href="{{ asset('') }}/assets/images/apple-touch-icon.png">
     <link rel="shortcut icon" href="https://getbootstrapadmin.com/remark/base/assets/images/favicon.ico">

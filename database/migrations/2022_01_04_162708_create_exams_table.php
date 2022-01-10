@@ -20,7 +20,9 @@ class CreateExamsTable extends Migration
             $table->integer('weight')->nullable();
             $table->integer('mark')->nullable();
             $table->enum('feedback', ['Better','Good','Average','Below Avg','Disaster'])->default('Disaster');
-            $table->datetime('exam_time')->nullable();
+            $table->date('exam_date')->nullable();
+            $table->time('exam_time')->nullable();
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

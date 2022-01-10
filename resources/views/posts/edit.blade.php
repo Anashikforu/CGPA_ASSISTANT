@@ -122,7 +122,7 @@
                                           @csrf
                                           @method('DELETE')
                             
-                                          <button type="submit" class="btn btn-danger">Delete</button>
+                                          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                       </form>
                                     </td>
                                 </tr>
@@ -139,6 +139,7 @@
                                   <th>Exam Name</th>
                                   <th>Mark</th>
                                   <th>Feedback</th>
+                                  <th>Status</th>
                                   <th>Action</th>
                                 </tr>
                               </thead>
@@ -146,19 +147,20 @@
                               @foreach ($exams as $key => $exam)
                                 <tr  style="background-color: #808080; color: aliceblue !important">
                                     <td style="background-color: #58CD36;">{{ ++$i }}</td>
-                                    <td style="background-color: #58CD36;">{{substr( $exam->exam_time,0,10); }}</td>
+                                    <td style="background-color: #58CD36;">{{ $exam->exam_date.' '.$exam->exam_time }}</td>
                                     <th style="background-color: #58CD36; font-size: 120%">{{ $exam->exam_name }}</th>
                                     <td>{{ $exam->mark }}</td>
                                     <th style="background-color: #58CD36; font-size: 120%"> {{ $exam->feedback }}</th>
+                                    <th style="background-color: #58CD36; font-size: 120%"> {{ $exam->status == 1?'Submittes': 'Due' }}</th>
                                     <td>
                                       <form action="{{ route('exams.destroy',$exam->id) }}" method="POST">
                                       
-                                          {{-- <a class="btn btn-primary" href="{{ route('exams.edit',$exam->id) }}">Edit</a> --}}
+                                        <button type="button" class="btn btn-warning editExam" data-toggle="modal" data-target="#editExam">Edit</button>
                         
                                           @csrf
                                           @method('DELETE')
                             
-                                          <button type="submit" class="btn btn-danger">Delete</button>
+                                          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                       </form>
                                     </td>
                                 </tr>
@@ -246,7 +248,13 @@
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label">Date</label>
                             <div class="col-md-9">
-                                <input type="date" class="form-control" name="exam_time" id="exam_time" />
+                                <input type="date" class="form-control" name="exam_date" id="exam_date" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label">Time</label>
+                            <div class="col-md-9">
+                                <input type="time" class="form-control" name="exam_time" id="exam_time" />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -274,11 +282,102 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label"></label>
+                            <div class="col-md-3">
+                                <div class="form-group form-check row">
+                                    <input type="checkbox" class="form-check-input status" name="status" id="status"  >
+                                    <label class="form-check-label" for="status">Submission</label>
+                                </div>
+                            </div>
+                        </div>
                         
         
                         <div class="text-right"> 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" id="author_create_submit" >Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="editExam" tabindex="-1" role="dialog" aria-labelledby="editExamLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editExamLabel">Edit  Exam</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <form class="form-horizontal" id="author_create"  autocomplete="off">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label">Exam Name</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="ed_exam_name" id="ed_exam_name" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label">Date</label>
+                            <div class="col-md-9">
+                                <input type="date" class="form-control" name="ed_exam_date" id="ed_exam_date" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label">Time</label>
+                            <div class="col-md-9">
+                                <input type="time" class="form-control" name="ed_exam_time" id="ed_exam_time" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                              <label class="col-md-3 form-control-label">Weight</label>
+                              <div class="col-md-9">
+                                  <input type="number" class="form-control" name="ed_weight" id="ed_weight"/>
+                              </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label">Mark</label>
+                            <div class="col-md-9">
+                                <input type="number" class="form-control" name="ed_mark" id="ed_mark" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label">Feedback</label>
+                            <div class="col-md-9">
+                                <select class="form-select" name="ed_feedback" id="ed_feedback" aria-label="Default select example">
+                                    <option selected>Select</option>
+                                    <option value="Better">Better</option>
+                                    <option value="Good">Good</option>
+                                    <option value="Average">Average</option>
+                                    <option value="Below Avg">Below Avg</option>
+                                    <option value="Disaster" selected>Disaster</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label"></label>
+                            <div class="col-md-3">
+                                <div class="form-group form-check row">
+                                    <input type="checkbox" class="form-check-input status" name="ed_status" id="ed_status"  >
+                                    <label class="form-check-label" for="status">Submission</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+        
+                        <div class="text-right"> 
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="ed_author_create_submit" >Submit</button>
                         </div>
                     </form>
                 </div>
@@ -307,7 +406,7 @@
             }
         });
 
-
+        let status = $('#status').val() == true? 1: 0;
         $('#author_create_submit').html('Sending..');
         /* Submit form data using ajax*/
         $.ajax({
@@ -315,11 +414,13 @@
             method: 'post',
             data: {
                 exam_name : $('#exam_name').val(),
+                exam_date : $('#exam_date').val(),
                 exam_time : $('#exam_time').val(),
                 f_subject_id : $('#f_subject_id').val(),
                 weight : $('#weight').val(),
                 mark : $('#mark').val(),
                 feedback : $('#feedback').val(),
+                status: status
             },
             success: function(response){
               console.log(response);
@@ -367,6 +468,11 @@
                  $("#inactive").val(0);
              }
           });
+
+          $(document).on('click', '.editExam', function(){ 
+             alert("will work later !");
+          });
+        
     });
 </script>
 @endPush

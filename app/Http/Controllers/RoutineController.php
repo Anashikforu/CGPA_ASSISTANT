@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Routine;
 use App\Models\Product;
+use App\Models\exam;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DateTime;
@@ -25,7 +26,8 @@ class RoutineController extends Controller
         $day = date('D', $timestamp);
         $subjects = Product::where('user_id',Auth::user()->id)->distinct()->get(['id'])->pluck('id');
         $classes = Routine::Where('weekday', 'like', '%' . $day . '%')->whereIn('f_subject_id',$subjects)->with('subject')->orderby('slot')->get();
-        return view('posts.routine',compact('classes','day'));
+        $exams = exam::Where('exam_date', '>=',  $time )->whereIn('f_subject_id',$subjects)->with('subject')->orderby('exam_date')->get();
+        return view('posts.routine',compact('classes','day','exams'));
     }
 
     /**
