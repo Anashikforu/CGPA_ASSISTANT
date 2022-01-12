@@ -15,26 +15,56 @@
   </div>
 
   <div class="page-content">
+    <div class="row row-lg">
+      <div class="col-lg-6">
     <!-- Panel -->
-    <div class="panel">
-      <div class="panel-body container-fluid">
-        <div class="row row-lg">
-          <div class="col-lg-12">
-            <!-- Example Basic -->
-            <div class="example-wrap">
-              <h4 class="example-title text">{{$day}}</h4>
-              <div class="example ">
-                @foreach ($classes as $key => $subject)
-                    <div class="form-group row">
-                        <h5 class='col-md-5  text'>{{$subject->subject->subject_name}}</h5>
-                        <h5 class='col-md-5  text'>{{$subject->slot}} - {{date("H:i", strtotime('+'.$subject->lecture.'hours - 5 minutes ',strtotime($subject->slot)))}}</h5>
-                    </div>
-                @endforeach
+      <div class="panel">
+        <div class="panel-body container-fluid">
+          <div class="row row-lg">
+            <div class="col-lg-12">
+              <!-- Example Basic -->
+              <div class="example-wrap">
+                <h4 class="example-title text">{{$date}} {{$day}}</h4>
+                <div class="example ">
+                  @foreach ($classes as $key => $subject)
+                      <div class="form-group row">
+                          <h5 class='col-md-8  text'>{{$subject->subject->subject_name}}</h5>
+                          <h5 class='col-md-4  text'>{{$subject->slot}} - {{date("H:i", strtotime('+'.$subject->lecture.'hours - 5 minutes ',strtotime($subject->slot)))}}</h5>
+                      </div>
+                  @endforeach
+                </div>
               </div>
+              <!-- End Example Basic -->
             </div>
-            <!-- End Example Basic -->
+          </div>
           </div>
         </div>
+
+      </div>
+      <div class="col-lg-6">
+
+        <div class="panel">
+          <div class="panel-body container-fluid">
+            <div class="row row-lg">
+              <div class="col-lg-12">
+                <!-- Example Basic -->
+                <div class="example-wrap">
+                  <h4 class="example-title text">{{$next_date}} {{$next_day}}</h4>
+                  <div class="example ">
+                    @foreach ($next_classes as $key => $subject)
+                        <div class="form-group row">
+                            <h5 class='col-md-8  text'>{{$subject->subject->subject_name}}</h5>
+                            <h5 class='col-md-4  text'>{{$subject->slot}} - {{date("H:i", strtotime('+'.$subject->lecture.'hours - 5 minutes ',strtotime($subject->slot)))}}</h5>
+                        </div>
+                    @endforeach
+                  </div>
+                </div>
+                <!-- End Example Basic -->
+              </div>
+            </div>
+            </div>
+          </div>
+
         </div>
       </div>
 

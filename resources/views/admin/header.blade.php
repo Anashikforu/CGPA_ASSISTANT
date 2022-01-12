@@ -13,7 +13,7 @@
       </button>
       <div class="navbar-brand navbar-brand-center "  >
         <img class="navbar-brand-logo" src="{{ asset('/') }}assets/images/logo.png" >
-        <a class="navbar-brand-text hidden-xs-down" href="{{ url('/', []) }}" style="color: white !important"> CGPA ASSISTANT</a>
+        <a class="navbar-brand-text hidden-xs-down" href="{{ url('/', []) }}" style="color: white !important"> MY ASSISTANT</a>
       </div>
       <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
         data-toggle="collapse">

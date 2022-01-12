@@ -24,10 +24,18 @@ class RoutineController extends Controller
         $timestamp = strtotime($time);
 
         $day = date('D', $timestamp);
+        $date = date("d-m-y", strtotime($time));
+
+        
+        $next_date = date("d-m-y", strtotime('+1 day', strtotime($time)));
+        $next_day = date('D', strtotime('+1 day', strtotime($time)));
+        
+
         $subjects = Product::where('user_id',Auth::user()->id)->distinct()->get(['id'])->pluck('id');
         $classes = Routine::Where('weekday', 'like', '%' . $day . '%')->whereIn('f_subject_id',$subjects)->with('subject')->orderby('slot')->get();
+        $next_classes = Routine::Where('weekday', 'like', '%' . $next_day . '%')->whereIn('f_subject_id',$subjects)->with('subject')->orderby('slot')->get();
         $exams = exam::Where('exam_date', '>=',  $time )->whereIn('f_subject_id',$subjects)->with('subject')->orderby('exam_date')->get();
-        return view('posts.routine',compact('classes','day','exams'));
+        return view('posts.routine',compact('classes','next_classes','day','date','next_date','next_day','exams'));
     }
 
     /**

@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>CGPA Assistant</title>
+    <title>MY Assistant</title>
 
     <link rel="apple-touch-icon" href="{{ asset('') }}/assets/images/apple-touch-icon.png">
     <link rel="shortcut icon" href="https://getbootstrapadmin.com/remark/base/assets/images/favicon.ico">
@@ -63,7 +63,7 @@
         <div class="page-content vertical-align-middle animation-slide-top animation-duration-1">
             <div class="brand">
                 <img class="brand-img" src="{{ asset('/') }}assets/images/logo.png" alt="...">
-                <h2 class="brand-text">CGPA ASSISTANT</h2>
+                <h2 class="brand-text">MY ASSISTANT</h2>
             </div>
             <main class="py-4">
                 @yield('content')

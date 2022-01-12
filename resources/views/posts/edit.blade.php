@@ -151,7 +151,7 @@
                                     <th style="background-color: #58CD36; font-size: 120%">{{ $exam->exam_name }}</th>
                                     <td>{{ $exam->mark }}</td>
                                     <th style="background-color: #58CD36; font-size: 120%"> {{ $exam->feedback }}</th>
-                                    <th style="background-color: #58CD36; font-size: 120%"> {{ $exam->status == 1?'Submittes': 'Due' }}</th>
+                                    <th style="background-color: #58CD36; font-size: 120%"> {{ $exam->status == 1?'Submitted': 'Due' }}</th>
                                     <td>
                                       <form action="{{ route('exams.destroy',$exam->id) }}" method="POST">
                                       

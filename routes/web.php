@@ -18,7 +18,7 @@ use App\Http\Controllers\ExamController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('subject.index');
+    return redirect()->route('routine.index');
 });
 Auth::routes();
 
