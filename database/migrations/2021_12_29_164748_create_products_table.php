@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('top')->nullable();
             $table->integer('expected')->nullable();
             $table->integer('semester_id')->nullable();
+            $table->biginteger('user_id')->unsigned();
             $table->boolean('inactive')->default(0);
             $table->timestamps();
         });

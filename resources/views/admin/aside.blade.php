@@ -21,10 +21,16 @@
             </li>
             <li class="site-menu-item has-sub">
               <a href="{{ url('/routine') }}">
-                  <i class="site-menu-icon wb-order " aria-hidden="true"></i>
+                  <i class="site-menu-icon wb-inbox " aria-hidden="true"></i>
                   <span class="site-menu-title">Class Alert</span>
               </a>
-          </li>
+            </li>
+            <li class="site-menu-item has-sub">
+              <a href="{{ url('/monitor') }}">
+                  <i class="site-menu-icon wb-calendar " aria-hidden="true"></i>
+                  <span class="site-menu-title">Monitor</span>
+              </a>
+            </li>
           </ul>
 
           {{-- <div class="site-menubar-section">

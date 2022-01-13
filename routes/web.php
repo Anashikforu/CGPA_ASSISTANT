@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\MonitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::resource('exams', ExamController::class)->middleware('auth');
 Route::get('subject/semester', [ProductController::class,'semester'])-> name('subject.semester')->middleware('auth');
 Route::resource('subject', ProductController::class)->middleware('auth');
 Route::resource('routine', RoutineController::class)->middleware('auth');
+Route::resource('monitor', MonitorController::class)->middleware('auth');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
