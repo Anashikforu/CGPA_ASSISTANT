@@ -110,7 +110,7 @@
             <div class="row row-lg">
               <div class="col-lg-12">
                 <!-- Example Basic -->
-                <div class="example-wrap">
+                <div class="example-wrap print">
                   <h4 class="example-title text">{{$previous_date}} {{$previous_day}}</h4>
                   <div class="example ">
                     <form class="form-horizontal"   autocomplete="off">
@@ -191,13 +191,15 @@
 
         </div>
         <div class="col-lg-4">
-
             <div class="panel">
+                <div class="panel-header">
+                    <button type="button" class="btn btn-sm btn-success" style="margin-left: 45% !important; margin-top: 10px" id="print_btn" name="print_btn">PRINT</button>
+                </div>
               <div class="panel-body container-fluid">
                 <div class="row row-lg">
                   <div class="col-lg-12">
                     <!-- Example Basic -->
-                    <div class="example-wrap">
+                    <div class="example-wrap" id="DivIdToPrint">
                       <h4 class="example-title text">{{$date_before_previous}} {{$day_before_previous}}</h4>
                       <div class="example ">
                         <form class="form-horizontal"   autocomplete="off">
@@ -346,6 +348,18 @@
             success: function(response){
                     console.log(response);
             }});
+        }
+
+        function printDiv() 
+        {
+            // var divToPrint=document.getElementById('DivIdToPrint');
+
+            var divToPrint=document.getElementById("DivIdToPrint");
+                newWin= window.open("");
+                newWin.document.write('<html lang="en"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></head><body>'+divToPrint.innerHTML+'</body></html>');
+                newWin.print();
+                newWin.close();
+
         }
 
 
@@ -601,6 +615,14 @@
                 }
                 
             });
+
+
+            $("#print_btn").click(function (e) { 
+                e.preventDefault();
+                printDiv();
+                // alert("ki hyse");
+            });
+
         
     });
 </script>

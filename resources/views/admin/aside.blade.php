@@ -26,6 +26,12 @@
               </a>
             </li>
             <li class="site-menu-item has-sub">
+              <a href="{{ url('/todo') }}">
+                  <i class="site-menu-icon wb-calendar " aria-hidden="true"></i>
+                  <span class="site-menu-title">To Do</span>
+              </a>
+            </li>
+            <li class="site-menu-item has-sub">
               <a href="{{ url('/monitor') }}">
                   <i class="site-menu-icon wb-calendar " aria-hidden="true"></i>
                   <span class="site-menu-title">Monitor</span>

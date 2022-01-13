@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\MonitorController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::get('subject/semester', [ProductController::class,'semester'])-> name('su
 Route::resource('subject', ProductController::class)->middleware('auth');
 Route::resource('routine', RoutineController::class)->middleware('auth');
 Route::resource('monitor', MonitorController::class)->middleware('auth');
+Route::resource('todo', TaskController::class)->middleware('auth');
+Route::post('todo/updateStatus', [TaskController::class,'updateStatus'])-> name('todo.updateStatus')->middleware('auth');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
